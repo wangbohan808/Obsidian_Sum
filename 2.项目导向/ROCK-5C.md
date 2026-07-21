@@ -1,0 +1,510 @@
+# 本项目重要操作
+
+## 电脑配置对应python以及pytorch环境
+
+### 安装最适合的显卡驱动
+
+- 台式机 RTX30/40/50 桌面卡：共用同一份 Desktop 驱动安装包；
+- 笔记本 RTX30/40/50 移动端卡：共用同一份 Notebook（NSD）驱动安装包
+
+- 游戏本（30/40/50 移动端）：最新版 `notebook dch whql Game Ready`；
+- 台式机主打游戏：最新版 `desktop dch whql Game Ready`；
+- 台式机重度剪辑 / 3D：最新版 `desktop dch whql Studio`；
+- 绝对不要台式包、笔记本包交叉安装。
+
+### 根据显卡->CUDA->唯一的Pytorch
+
+- 查询CUDA版本上限，后续根据这个结果直接安装最新的“pytorch与CUDA”
+```bash
+PS C:\Users\12600> nvidia-smi
+Thu Jun 18 13:45:36 2026
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 591.74                 Driver Version: 591.74         CUDA Version: 13.1 
+```
+- 显卡：RTX 3050（算力 sm_86，最低支持 CUDA 11.1）
+- 驱动版本：591.74
+- `nvidia-smi` 显示兼容上限 CUDA 13.1：本机可安装 ≤13.1 的任意 CUDA 配套 PyTorch
+
+- 查看已安装的python版本，根据已有版本创建后续虚拟环境
+```bash
+PS C:\Users\12600> py -0p
+ -V:3.14 *        C:\Python314\python.exe
+ -V:3.11          C:\Python311\python.exe
+ -V:3.9           C:\Python39\python.exe
+```
+
+
+- 安装GPU版本pytorch
+```bash
+# C盘新建存放所有虚拟环境的文件夹
+mkdir C:\Py_Venv
+cd C:\Py_Venv
+
+# 使用系统默认Python3.14创建GPU环境
+py -3.14 -m venv torch_gpu_py314_cu126
+.\torch_gpu_py314_cu126\Scripts\Activate.ps1
+
+# 升级pip
+python -m pip install --upgrade pip
+
+# 写入pip全局配置，全部走清华源
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+# 补充清华pytorch镜像（torch相关包加速）
+pip config set global.extra-index-url https://mirrors.tuna.tsinghua.edu.cn/pytorch-wheels/torch/
+# 关闭超时频繁重试，减少卡死
+pip config set global.timeout 120
+
+# 缓存包加速
+pip config set global.cache-dir C:\Python_Venv\torch_cpu_py311\pip_cache
+pip config list
+
+# 安装CUDA12.6 GPU版本
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+
+# 验证GPU可用
+import torch
+print(torch.version.cuda)
+print(torch.cuda.is_available()) # 输出True即成功
+
+deactivate
+```
+
+- 安装CPU版本Pytorch
+```bash
+# 指定Python3.11创建纯CPU环境
+py -3.11 -m venv torch_cpu_py311
+
+.\torch_cpu_py311\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+# CPU专属安装命令
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+
+# 验证CPU版本
+import torch
+print(torch.version.cuda) # 输出None
+print(torch.cuda.is_available()) # 输出False
+
+deactivate
+```
+
+
+**为什么升级pip，但是python可以选择旧版本？**
+Python 解释器：新增语法、标准库功能	不能用新语法，普通旧代码正常运行	可以，按需选用低版本
+pip 包管理器：适配新 Python、修复依赖算法、兼容网络源、修复系统 bug	安装失败、依赖错乱、下载超时、找不到包	不可以，新建环境必须升级
+
+
+**激活虚拟环境指令**
+```bash
+# 激活虚拟环境
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+& C:\Python_Venv\torch_cpu_py311\Scripts\Activate.ps1
+```
+
+
+## PC端部署本地大语言模型
+
+![[Pasted image 20260720160216.png]]
+- 创建大模型对应名称的空文件夹
+- 国内镜像网站/开VPN后使用官网，将文件逐个下载到对应文件夹
+
+
+- 激活虚拟环境，并安装依赖
+```bash
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+C:\Python_Venv\torch_cpu_py311\Scripts\Activate.ps1
+
+pip install transformers accelerate sentencepiece protobuf
+```
+
+- 根目录书写脚本，直接进行执行
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+
+model_path = r"E:\VMWare\VM_Share\DeepSeek-R1-1.5B"
+
+print("加载分词器...")
+tokenizer = AutoTokenizer.from_pretrained(model_path)
+
+print("加载模型到 CPU（首次较慢，请耐心等待）...")
+model = AutoModelForCausalLM.from_pretrained(
+    model_path,
+    torch_dtype=torch.float32,  # CPU 用 float32 最稳
+    low_cpu_mem_usage=True,
+)
+model.to("cpu")
+model.eval()
+
+print("模型已就绪。输入问题后回车；输入 exit 退出。\n")
+while True:
+    user_text = input("你: ").strip()
+    if user_text.lower() in {"exit", "quit", "q"}:
+        break
+    if not user_text:
+        continue
+
+    messages = [{"role": "user", "content": user_text}]
+    prompt = tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=True
+    )
+    inputs = tokenizer(prompt, return_tensors="pt")
+
+    print("生成中...")
+    with torch.no_grad():
+        outputs = model.generate(
+            **inputs,
+            max_new_tokens=512,
+            temperature=0.6,
+            top_p=0.95,
+            do_sample=True,
+            pad_token_id=tokenizer.eos_token_id,
+        )
+
+    new_tokens = outputs[0][inputs["input_ids"].shape[-1]:]
+    print("\n模型:", tokenizer.decode(new_tokens, skip_special_tokens=True), "\n")
+```
+
+这是一个 **DeepSeek-R1-Distill-Qwen-1.5B** 的本地 Hugging Face 模型目录：用 Qwen2.5-1.5B 做底座、再用 DeepSeek-R1 蒸馏出来的推理小模型。下面按文件说明作用。
+
+---
+
+### 总览：模型内文件怎么配合工作
+
+推理时大致是：
+
+```
+用户输入文本
+    ↓
+tokenizer（tokenizer.json + tokenizer_config.json）→ token id
+    ↓
+模型权重 + config.json → 神经网络计算
+    ↓
+generation_config.json（或脚本里的参数）控制采样
+    ↓
+tokenizer 再解码回文字
+```
+
+`run_cpu.py` 把上述流程串成可交互的 CPU 演示脚本。
+
+---
+
+1. `run_cpu.py`（本地运行脚本）
+
+你自己写的 / 本地用的启动脚本，作用是：
+
+- 用 `AutoTokenizer` / `AutoModelForCausalLM` 从本目录加载模型
+- 强制在 **CPU** 上跑，并用 `float32`（CPU 更稳）
+- 用 `apply_chat_template` 按 DeepSeek 对话格式拼 prompt
+- 循环读入问题、`generate`、解码回答；输入 `exit`/`quit`/`q` 退出
+
+关键参数与官方推荐一致：`temperature=0.6`、`top_p=0.95`。
+
+---
+
+2. `config.json`（模型结构配置）
+
+告诉 Transformers：**网络长什么样、怎么建图**。没有它就无法正确构造模型。
+
+从你这份配置可知：
+
+| 字段 | 含义（结合本模型） |
+|------|-------------------|
+| `model_type: qwen2` / `Qwen2ForCausalLM` | 架构是 Qwen2 因果语言模型 |
+| `hidden_size: 1536` | 隐藏层维度 |
+| `num_hidden_layers: 28` | Transformer 层数 |
+| `num_attention_heads: 12` | 注意力头数 |
+| `num_key_value_heads: 2` | GQA（分组查询注意力） |
+| `vocab_size: 151936` | 词表大小 |
+| `max_position_embeddings: 131072` | 理论最大上下文长度 |
+| `torch_dtype: bfloat16` | 权重通常以 bf16 存；你脚本里改成了 float32 以适配 CPU |
+
+这是“蓝图”，**不是**权重本身。
+
+---
+
+3. `generation_config.json`（默认生成策略）
+
+控制 **怎么采样下一个 token**，例如：
+
+- `do_sample: true`：采样而不是纯贪心
+- `temperature: 0.6`、`top_p: 0.95`：官方推荐，减少死循环/胡言
+- `bos_token_id` / `eos_token_id`：起止特殊 token id
+
+`run_cpu.py` 里又显式传了这些参数；不传时库会回退到这个文件。
+
+---
+
+4. `tokenizer_config.json`（分词器行为与对话模板）
+
+定义分词器类、特殊 token，以及最重要的 **`chat_template`**（Jinja 模板）。
+
+作用包括：
+
+- 指定 BOS/EOS/PAD（如 `<｜begin▁of▁sentence｜>`、`<｜end▁of▁sentence｜>`）
+- `model_max_length: 16384`
+- 把 `[{"role":"user","content":"..."}]` 转成模型训练时见过的格式
+- 开启 `add_generation_prompt` 时，会追加类似 `<｜Assistant｜><think>\n`，引导先“思考”再回答（R1 系列特征）
+
+这就是 `run_cpu.py` 里 `tokenizer.apply_chat_template(...)` 依赖的配置。
+
+---
+
+5. `tokenizer.json`（完整词表与分词规则）
+
+体积很大（三十万行级 JSON），是 **实际分词引擎数据**：
+
+- 全部 token 与 id 映射
+- BPE/合并规则等
+- 特殊 token：`<｜User｜>`、`<｜Assistant｜>`、`<think>` 相关标记等
+
+负责：**文本 ↔ token id**。没有它无法编码输入、也无法解码输出。
+
+---
+
+6. `README.md`（模型说明文档）
+
+来自 DeepSeek-R1 仓库/模型卡，内容包括：
+
+- R1 / R1-Zero / 蒸馏模型介绍
+- 本系列里 1.5B 对应 **DeepSeek-R1-Distill-Qwen-1.5B**
+- 评测、本地跑法（vLLM、SGLang）、使用建议
+- 许可与引用信息
+
+**不参与推理**，只给人看。
+
+---
+
+7. `LICENSE`（许可证）
+
+MIT License（DeepSeek 2023）。允许使用、修改、商用等，需保留版权声明。  
+蒸馏模型还可能受底座（Qwen Apache 2.0）约束，README 里有说明。
+
+---
+
+8. `gitattributes`（Git LFS 规则）
+
+原名多为 `.gitattributes`。作用是：大文件（`.safetensors`、`.bin`、`.pt` 等）走 **Git LFS**，避免把数 GB 权重直接塞进普通 Git。
+
+对本地 `python run_cpu.py` **无影响**；只影响从 Hugging Face / Git 拉取时的方式。
+
+---
+
+9. 权重文件（目录里应有，但是“真正的大脑”）
+
+终端里已有 `Loading weights: 100%|...| 339/339`，说明权重已成功加载。完整 HF 目录通常还会有类似：
+
+- `model.safetensors` 或分片 `model-00001-of-0000x.safetensors`
+- 有时还有 `model.safetensors.index.json`（分片索引）
+
+这些才是 **训练好的参数**（约 1.5B）。`config.json` 建结构，权重填参数。没有它们只能建空壳，不能推理。
+
+（编辑器索引有时会漏掉超大二进制文件，所以列表里可能只看到配置类文件。）
+
+---
+
+文件关系一览
+
+| 文件 | 角色 | 推理是否必需 |
+|------|------|--------------|
+| 权重 `.safetensors` / `.bin` | 模型参数 | 必需 |
+| `config.json` | 网络结构 | 必需 |
+| `tokenizer.json` | 词表与分词 | 必需 |
+| `tokenizer_config.json` | 特殊 token + 对话模板 | 强烈依赖（尤其 chat） |
+| `generation_config.json` | 默认采样超参 | 可选（可被代码覆盖） |
+| `run_cpu.py` | CPU 交互入口 | 仅本地跑需要 |
+| `README.md` / `LICENSE` / `gitattributes` | 文档与仓库元数据 | 否 |
+
+---
+
+
+## 一键更新apt软件源
+
+```bash
+# 1. 只备份所有 50- 开头的源文件（安全）
+sudo mkdir -p /etc/apt/sources.list.d/backup
+sudo cp /etc/apt/sources.list.d/50-* /etc/apt/sources.list.d/backup/
+
+# 2. 替换 50-bookworm.list（主源）
+sudo tee /etc/apt/sources.list.d/50-bookworm.list > /dev/null << EOF
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware
+deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware
+EOF
+
+# 3. 替换 50-bookworm-updates.list（更新源）
+sudo tee /etc/apt/sources.list.d/50-bookworm-updates.list > /dev/null << EOF
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware
+deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware
+EOF
+
+# 4. 替换 50-bookworm-security.list（安全补丁）
+sudo tee /etc/apt/sources.list.d/50-bookworm-security.list > /dev/null << EOF
+deb https://mirrors.tuna.tsinghua.edu.cn/debian-security/ bookworm-security main contrib non-free non-free-firmware
+deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security/ bookworm-security main contrib non-free non-free-firmware
+EOF
+
+# 5. 替换 50-bookworm-backports.list（新版软件源）
+sudo tee /etc/apt/sources.list.d/50-bookworm-backports.list > /dev/null << EOF
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware
+deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware
+EOF
+```
+- `sudo cp /etc/apt/sources.list.d/50-* /etc/apt/sources.list.d/backup/`将目录下`50-`开头的所有目标文件复制到指定目录下
+- `<< EOF`会将下一行开始的输入，写进上述文件，直到`EOF`停止
+- `sudo tee /etc/apt/sources.list.d/50-bookworm-backports.list > /dev/null`如果没有`> /dev/null`会将写入的内容同时输出到屏幕，加上`> /dev/null`将打印到屏幕上的内容丢进垃圾桶
+- `https://mirrors.tuna.tsinghua.edu.cn/debian-security/`也就是常说的`URL`统一资源定位符，可以定位网络资源地址
+
+- 完成上述操作，使用`sudo apt update`将列表更新到本地，从而实现后续搜索定位需要下载的资源的最新地址
+
+
+## 搭建板端RKNN环境
+
+- 解压文件指令
+```bash
+tar -zxvf rknn-toolkit2-2.3.2.tar.gz
+```
+
+
+## 搭建虚拟环境
+
+- 安装虚拟环境依赖
+```bash
+sudo apt update
+sudo apt install python3-venv python3-pip
+```
+
+```bash
+# 创建虚拟环境，使用本机python3.11，并指定虚拟环境文件夹位置
+python3 -m venv ~/rknn_venv
+
+# 激活虚拟环境
+source ~/rknn_venv/bin/activate
+```
+
+```bash
+# 升级虚拟环境pip，并且指定后续使用清华源
+pip install --upgrade pip
+
+# 写入pip全局配置，全部走清华源
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+# 补充清华pytorch镜像（torch相关包加速）
+pip config set global.extra-index-url https://mirrors.tuna.tsinghua.edu.cn/pytorch-wheels/torch/
+# 关闭超时频繁重试，减少卡死
+pip config set global.timeout 120
+```
+
+```bash
+# 首先安装系统编译依赖，否则后续编译会报错
+sudo apt update
+# Python3.11开发头文件 + C/C++编译全套 + pybind11 + cmake
+sudo apt install python3.11-dev python3-dev build-essential cmake pybind11-dev libprotobuf-dev protobuf-compiler
+
+# 切换目录，下载用于NPU推理的python API
+(rknn_venv) radxa@rock-5c:~$ cd ~/rknn-toolkit2-2.3.2/rknn-toolkit2/packages/arm64
+(rknn_venv) radxa@rock-5c:~/rknn-toolkit2-2.3.2/rknn-toolkit2/packages/arm64$ pip install rknn_toolkit2-2.3.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
+
+(rknn_venv) radxa@rock-5c:~$ cd ~/rknn-toolkit2-2.3.2/rknn-toolkit-lite2/packages
+(rknn_venv) radxa@rock-5c:~/rknn-toolkit2-2.3.2/rknn-toolkit-lite2/packages$ pip3 install rknn_toolkit_lite2-2.3.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
+```
+
+
+## 将共享文件夹中的文件移动并解压
+
+```bash
+# 两种方式解压到 RKSDK文件夹下
+wbh808@wbh-robot:~$ cd /mnt/hgfs/
+wbh808@wbh-robot:/mnt/hgfs$ unzip bsp.zip -d ~/RKSDK/
+
+# 解压后没有自动创建文件夹，因而需要重命名
+wbh808@wbh-robot:~$ mv RKSDK bsp
+```
+
+```bash
+# windows中下载的文件直接移动到Linux会有一定的格式问题，统一转化：
+sudo apt update
+sudo apt install dos2unix
+
+# 进入bsp根目录执行
+cd ~/bsp
+find . -type f -exec dos2unix {} \;
+```
+- 此方案如果仓库有嵌套、后续仍需要拉取代码，会有一系列问题
+- **采用后续局域网直接拉取方案**
+
+## Linux Podman + Clash 局域网代理
+
+![[Pasted image 20260721094957.png]]
+- clash配置打开“局域网连接“
+
+
+
+查看宿主机局域网IP
+```bash
+wbh808@wbh-robot:~$ hostname -I
+192.168.203.129 
+```
+
+```bash
+# 清除旧代理
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+unset http_proxy https_proxy all_proxy socks_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY
+
+# 设置新代理（局域网）
+export HTTP_PROXY=http://192.168.203.129:7897
+export HTTPS_PROXY=http://192.168.203.129:7897
+git config --global http.proxy http://192.168.203.129:7897
+git config --global https.proxy http://192.168.203.129:7897
+```
+
+- 查看当前所有代理
+```bash
+echo $http_proxy
+echo $https_proxy
+echo $all_proxy
+echo $socks_proxy
+# 大写变量（部分程序读取）
+echo $HTTP_PROXY
+echo $HTTPS_PROXY
+echo $ALL_PROXY
+
+git config --global --get http.proxy
+git config --global --get https.proxy
+git config --global --get socks5.proxy
+```
+
+
+## 只有容器需要局域网代理
+
+- `export`是给当前终端临时配置变量
+```bash
+# 1. 给当前终端全局环境变量（git/npm/curl/wget 等命令走代理）
+export http_proxy=http://127.0.0.1:7897
+export https_proxy=http://127.0.0.1:7897
+export all_proxy=socks://127.0.0.1:7897
+export socks_proxy=socks://127.0.0.1:7897
+export HTTP_PROXY=http://127.0.0.1:7897
+export HTTPS_PROXY=http://127.0.0.1:7897
+export ALL_PROXY=socks://127.0.0.1:7897
+
+# 2. Git 全局代理配置（github clone / submodule 加速）
+git config --global http.proxy http://127.0.0.1:7897
+git config --global https.proxy http://127.0.0.1:7897
+
+# 3. NPM 代理 + 淘宝镜像（npm install 提速）
+npm config set proxy http://127.0.0.1:7897
+npm config set https-proxy http://127.0.0.1:7897
+npm config set registry https://registry.npmmirror.com
+
+# 4. 安装 devcontainers 容器工具依赖
+npm install @devcontainers/cli
+
+# 5. 将项目内置脚本、npm 工具加入系统PATH，让 rsdk 命令全局可用
+export PATH="$PWD/src/bin:$PWD/node_modules/.bin:$PATH"
+
+# 6. 携带局域网IP代理启动dev容器（Docker构建镜像专用，容器不能用127.0.0.1）
+HTTP_PROXY=http://192.168.203.129:7897 HTTPS_PROXY=http://192.168.203.129:7897 ALL_PROXY=socks://192.168.203.129:7897 NO_PROXY=127.0.0.1,localhost,172.17.0.1,192.168.203.* rsdk devcon up
+
+# 7. 进入构建好的开发容器
+rsdk devcon
+```
