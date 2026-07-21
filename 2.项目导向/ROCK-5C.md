@@ -431,7 +431,7 @@ find . -type f -exec dos2unix {} \;
 - 此方案如果仓库有嵌套、后续仍需要拉取代码，会有一系列问题
 - **采用后续局域网直接拉取方案**
 
-## Linux Podman + Clash 局域网代理
+## (bsp)Linux Podman + Clash 局域网代理
 
 ![[Pasted image 20260721094957.png]]
 - clash配置打开“局域网连接“
@@ -474,7 +474,7 @@ git config --global --get socks5.proxy
 ```
 
 
-## 只有容器需要局域网代理
+## （rsdk）只有容器需要局域网代理
 
 - `export`是给当前终端临时配置变量
 ```bash
@@ -508,3 +508,33 @@ HTTP_PROXY=http://192.168.203.129:7897 HTTPS_PROXY=http://192.168.203.129:7897 A
 # 7. 进入构建好的开发容器
 rsdk devcon
 ```
+
+
+## (rk3588_sdk)BuildRoot更换软件源
+
+- 图像化修改软件源位置似乎不会生效，需要直接在`Makefile`文件进行修改（可能需要叠加修改图形化配置）
+```bash
+# 进入特定文件
+cd buildroot
+vim package/make/make.mk
+
+# 注释/替换原有
+# MAKE_SITE = $(BR2_GNU_MIRROR)/make
+MAKE_SITE = https://mirrors.tuna.tsinghua.edu.cn/gnu/make
+```
+- buildroot/dl/ 目录：全局源码缓存目录所有下载的源码压缩包都会保存在这里。
+- 如果手动把 make-4.3.tar.lz 放入 dl/make/，buildroot 优先读取本地文件，直接跳过 wget 联网下载（也就是我们之前说的离线兜底方案）。
+
+
+- 清理缓存，重新编译
+```bash
+rm -rf output/rockchip_rk3588
+# buildroot目录内重载配置
+make O=output/rockchip_rk3588 rockchip_rk3588_defconfig
+# 返回SDK根目录编译
+cd ..
+./build.sh all
+```
+- `~/rk3588_sdk/buildroot/`：Buildroot 源码根目录，所有根文件系统编译逻辑、软件包配置、脚本全部在此
+- Buildroot 里**每一个软件包都对应 `package/软件名/软件名.mk`**，`make.mk` = make 软件包的编译规则脚本
+- 删除旧 output 目录：清除过期编译缓存、旧标记文件、旧.config

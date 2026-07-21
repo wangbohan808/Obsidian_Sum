@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1.开发技能/Github.md",
+                "file": "2.项目导向/ROCK-5C.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Github"
+              "title": "ROCK-5C"
             }
           }
         ]
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1.开发技能/Github.md",
+                "file": "2.项目导向/ROCK-5C.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Github 的大纲"
+              "title": "ROCK-5C 的大纲"
             }
           }
         ],
@@ -185,6 +185,7 @@
   },
   "active": "a58f80866c61471b",
   "lastOpenFiles": [
+    "1.开发技能/Github.md",
     "2.项目导向/ROCK-5C.md",
     "3.海能工作/海能常用操作.md",
     "Assets/Pasted image 20260721094957.png",
@@ -192,7 +193,6 @@
     "Assets",
     "2.项目导向/海尔IOT.md",
     "1.开发技能/ClaudeCode.md",
-    "1.开发技能/Github.md",
     "3.海能工作",
     "1.开发技能",
     "欢迎.md",
