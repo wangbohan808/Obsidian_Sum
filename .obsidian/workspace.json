@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "3.海能工作/海能常用操作.md",
+                "file": "1.开发技能/Github.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "海能常用操作"
+              "title": "Github"
             }
           }
         ]
@@ -158,7 +158,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "3.海能工作/海能常用操作.md",
+                "file": "1.开发技能/Github.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -187,13 +187,16 @@
   },
   "active": "facc310258735c8d",
   "lastOpenFiles": [
-    "2.项目导向/4.4 CW32L010_Firmware_目录结构优化完整指南.md",
+    "2.项目导向/4.4 CW32L010_Firmware_编译系统完整讲解.md",
+    "2.项目导向/4.2 CW32L010_Firmware_错误修复完整指南.md",
+    "3.海能工作/海能常用操作.md",
+    "2.项目导向/4.1 CW32L010_Firmware_目录结构优化完整指南.md",
     "2.项目导向/4.3 CW32L010_BootLoader_APP_优化总结.md",
+    "2.项目导向/4.2 CW32的APP代码重构.md",
+    "2.项目导向/4.1 CW32的Bootloader代码重构.md",
     "2.项目导向/1.1 ROCK-5C.md",
     "3.海能工作/海尔待办事项.md",
-    "3.海能工作/海能常用操作.md",
     "2.项目导向/1.5 Linux嵌入式摄像头应用与驱动开发知识点大全.md",
-    "2.项目导向/4.2 CW32的APP代码重构.md",
     "2.项目导向/2.1 海尔IOT.md",
     "1.开发技能/Mac编译MCU.md",
     "2.项目导向/1.4 Linux摄像头驱动构建完整指南_ROCK5C.md",
@@ -201,7 +204,6 @@
     "1.开发技能/ClaudeCode.md",
     "2.项目导向/1.3 MCU到BSP工程师转型指南.md",
     "2.项目导向/1.2 BSP工程师完整培训指南.md",
-    "2.项目导向/4.1 CW32的Bootloader代码重构.md",
     "2.项目导向/3.1 MES系统代码重构.md",
     "1.开发技能/Github.md",
     "2.项目导向/2.2 嵌入式知识点与本项目源码对照.md",
