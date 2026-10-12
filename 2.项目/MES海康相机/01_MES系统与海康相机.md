@@ -5,6 +5,7 @@ tags: [工作/MES]
 project: MES海康相机
 created: "2026-04-28"
 updated: "2026-10-12"
+up: "[[00_项目MOC]]"
 ---
 
 # MES 系统与海康相机上位机

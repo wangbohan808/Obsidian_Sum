@@ -1,11 +1,12 @@
 ---
 type: 原子
-status: 整理中
+status: 空壳
 mastery: 1
 tags:
   - 技术/Linux
 created: "2026-07-17"
 updated: "2026-07-17"
+up: "[[00_开发技能MOC]]"
 ---
 
 # VMware Workstation Pro

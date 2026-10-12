@@ -6,6 +6,7 @@ tags:
 project: 猫咪监控
 created: "2026-08-23"
 updated: "2026-08-23"
+up: "[[00-README]]"
 ---
 
 # Linux 虚拟机通过 SSH 向 Windows 宿主机传文件

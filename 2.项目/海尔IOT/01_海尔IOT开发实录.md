@@ -6,6 +6,7 @@ tags:
 project: 海尔IOT
 created: "2026-04-23"
 updated: "2026-10-12"
+up: "[[00_项目MOC]]"
 ---
 
 # 海尔 IOT 开发实录（network_haier_normal）

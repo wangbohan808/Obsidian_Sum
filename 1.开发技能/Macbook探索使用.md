@@ -6,6 +6,7 @@ tags:
   - 技术/工具
 created: "2026-08-13"
 updated: "2026-08-13"
+up: "[[00_开发技能MOC]]"
 ---
 
 # Macbook探索使用

@@ -6,6 +6,7 @@ tags:
   - 技术/Linux
 created: "2026-06-01"
 updated: "2026-06-01"
+up: "[[00_开发技能MOC]]"
 ---
 
 # OrangePi4A标准工程

@@ -6,6 +6,7 @@ tags:
 project: 桌面像素台灯
 created: "2026-08-21"
 updated: "2026-08-21"
+up: "[[00_桌面像素台灯总览]]"
 ---
 
 # 第 2 套方案：STM32F407 主控 + ESP32 WiFi 从机 — FreeRTOS 双系统方案 v1

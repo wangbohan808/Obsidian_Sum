@@ -6,6 +6,7 @@ tags:
 project: 猫咪监控
 created: "2026-08-19"
 updated: "2026-08-19"
+up: "[[00_总览与学习路线]]"
 ---
 
 # 17 Arch Linux 移植：完整操作流程与底层原理

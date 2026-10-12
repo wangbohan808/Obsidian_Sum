@@ -6,6 +6,7 @@ tags:
 project: 猫咪监控
 created: "2026-08-11"
 updated: "2026-08-11"
+up: "[[00_总览与学习路线]]"
 ---
 
 # 05 端侧 AI 部署：RKNN（视觉）与 RKLLM（大模型）

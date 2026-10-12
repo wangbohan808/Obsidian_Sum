@@ -6,6 +6,7 @@ tags:
 project: 桌面像素台灯
 created: "2026-08-20"
 updated: "2026-08-20"
+up: "[[00_桌面像素台灯总览]]"
 ---
 
 # ESP32-S3 桌面像素小夜灯「加油鸭」— FreeRTOS 全功能规划 v2

@@ -6,6 +6,7 @@ tags:
 project: 猫咪监控
 created: "2026-08-11"
 updated: "2026-08-11"
+up: "[[00_总览与学习路线]]"
 ---
 
 # 03 Buildroot 镜像构建（rk3588_sdk）

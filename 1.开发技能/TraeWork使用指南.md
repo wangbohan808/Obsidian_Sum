@@ -6,6 +6,7 @@ tags:
   - 技术/工具
 created: "2026-08-27"
 updated: "2026-08-27"
+up: "[[00_开发技能MOC]]"
 ---
 
 # TraeWork 使用指南
