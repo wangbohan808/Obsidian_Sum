@@ -3,9 +3,13 @@
 .obsidian/workspace.json
 .obsidian/workspace.json.bak
 
-# 插件本体（体积大、可重装，不用提交）
+# 插件本体：默认不提交（体积大、可重装）
 .obsidian/plugins/*
 !.obsidian/plugins/
+
+# 例外：Dataview 是 MOC / 仪表盘的运行时依赖，提交它才能克隆后"开箱即用"
+!.obsidian/plugins/dataview/
+!.obsidian/plugins/dataview/**
 
 # 注意：.obsidian/community-plugins.json 故意不忽略。
 # 它记录"已启用哪些插件"（本库依赖 Dataview），提交它，克隆方才知道需要装什么。
