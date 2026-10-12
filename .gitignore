@@ -1,0 +1,28 @@
+# Obsidian 专用忽略文件
+# 界面布局、工作区（每次打开软件都会变，绝对不用提交）
+.obsidian/workspace.json
+.obsidian/workspace.json.bak
+
+# 插件配置缓存（不用提交）
+.obsidian/plugins/*
+!.obsidian/plugins/
+.obsidian/community-plugins.json
+
+# 主题、缓存
+.obsidian/appearance.json
+.obsidian/themes/*
+
+# AI 工具缓存与临时产物
+.trae/
+.trae-html-share-packages/
+.workbuddy/
+
+# 系统垃圾文件（Windows/Mac 都忽略）
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# 你自己的临时文件
+*.bak
+*.backup
