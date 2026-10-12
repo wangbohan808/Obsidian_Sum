@@ -1,0 +1,290 @@
+{
+	"nodes": [
+		{
+			"id": "b1c2d3e4f5a60001",
+			"type": "text",
+			"text": "# 猫咪监控 · 技术路线\n\n目标：在 ROCK 5C 上构建**只含所需驱动 + 端侧 AI** 的定制镜像，实现\"猫咪进食/饮水时自动录像并上传\"。\n\n上半部分=四条镜像构建路线；下半部分=端侧 AI 与项目落地链路。"
+,
+			"x": 40,
+			"y": -360,
+			"width": 800,
+			"height": 200
+		},
+		{
+			"id": "b1c2d3e4f5a60090",
+			"type": "group",
+			"label": "四条镜像构建路线（原理与取舍）",
+			"x": -40,
+			"y": -100,
+			"width": 1900,
+			"height": 600
+		},
+		{
+			"id": "b1c2d3e4f5a60010",
+			"type": "text",
+			"text": "## BSP\n\n只管 **bootloader + kernel**，产物是 arm64 Debian 包。\n\n定制驱动、设备树、内核配置都在这一层改。",
+			"x": 0,
+			"y": -60,
+			"width": 420,
+			"height": 320
+		},
+		{
+			"id": "b1c2d3e4f5a60011",
+			"type": "text",
+			"text": "## Yocto\n\nBitBake 按 recipe **源码级**构建整个发行版。\n\n完全可复现、最可控；学习曲线最陡、构建最慢。",
+			"x": 460,
+			"y": -60,
+			"width": 420,
+			"height": 320
+		},
+		{
+			"id": "b1c2d3e4f5a60012",
+			"type": "text",
+			"text": "## Buildroot\n\n选择 defconfig 编译，产出**极小 rootfs**。\n\n适合专用设备固件；装 AI 运行时需逐包选配。",
+			"x": 920,
+			"y": -60,
+			"width": 420,
+			"height": 320
+		},
+		{
+			"id": "b1c2d3e4f5a60013",
+			"type": "text",
+			"text": "## rsdk\n\n用 mmdebstrap 从 Debian 源**拼装 RadxaOS**。\n\n原生 `apt` 生态，AI 运行时集成最省力。**本项目主推。**",
+			"x": 1380,
+			"y": -60,
+			"width": 420,
+			"height": 320
+		},
+		{
+			"id": "b1c2d3e4f5a60021",
+			"type": "file",
+			"file": "2.项目/猫咪监控/01_BSP开发-U-boot与内核.md",
+			"x": 0,
+			"y": 280,
+			"width": 420,
+			"height": 180
+		},
+		{
+			"id": "b1c2d3e4f5a60022",
+			"type": "file",
+			"file": "2.项目/猫咪监控/02_Yocto镜像构建.md",
+			"x": 460,
+			"y": 280,
+			"width": 420,
+			"height": 180
+		},
+		{
+			"id": "b1c2d3e4f5a60023",
+			"type": "file",
+			"file": "2.项目/猫咪监控/03_Buildroot镜像构建.md",
+			"x": 920,
+			"y": 280,
+			"width": 420,
+			"height": 180
+		},
+		{
+			"id": "b1c2d3e4f5a60024",
+			"type": "file",
+			"file": "2.项目/猫咪监控/04_rsdk编译RadxaOS.md",
+			"x": 1380,
+			"y": 280,
+			"width": 420,
+			"height": 180
+		},
+		{
+			"id": "b1c2d3e4f5a60091",
+			"type": "group",
+			"label": "端侧 AI 与项目落地链路",
+			"x": -40,
+			"y": 700,
+			"width": 1900,
+			"height": 600
+		},
+		{
+			"id": "b1c2d3e4f5a60030",
+			"type": "file",
+			"file": "2.项目/猫咪监控/05_端侧AI部署-RKNN与RKLLM.md",
+			"x": 0,
+			"y": 760,
+			"width": 400,
+			"height": 200
+		},
+		{
+			"id": "b1c2d3e4f5a60031",
+			"type": "file",
+			"file": "2.项目/猫咪监控/09_猫咪监控项目-音视频驱动与采集链路.md",
+			"x": 460,
+			"y": 760,
+			"width": 400,
+			"height": 200
+		},
+		{
+			"id": "b1c2d3e4f5a60032",
+			"type": "file",
+			"file": "2.项目/猫咪监控/10_猫咪监控项目-AI行为识别与事件录制.md",
+			"x": 920,
+			"y": 760,
+			"width": 400,
+			"height": 200
+		},
+		{
+			"id": "b1c2d3e4f5a60033",
+			"type": "file",
+			"file": "2.项目/猫咪监控/11_猫咪监控项目-模型裁剪与优化专题.md",
+			"x": 1380,
+			"y": 760,
+			"width": 400,
+			"height": 200
+		},
+		{
+			"id": "b1c2d3e4f5a60034",
+			"type": "file",
+			"file": "2.项目/猫咪监控/12_猫咪监控项目-网络存储上传与系统服务.md",
+			"x": 0,
+			"y": 1040,
+			"width": 400,
+			"height": 200
+		},
+		{
+			"id": "b1c2d3e4f5a60035",
+			"type": "file",
+			"file": "2.项目/猫咪监控/13_猫咪监控项目-定制镜像整合与验收.md",
+			"x": 460,
+			"y": 1040,
+			"width": 400,
+			"height": 200
+		},
+		{
+			"id": "b1c2d3e4f5a60036",
+			"type": "file",
+			"file": "2.项目/猫咪监控/16_猫咪监控项目-本地常显屏与情趣面板.md",
+			"x": 920,
+			"y": 1040,
+			"width": 400,
+			"height": 200
+		},
+		{
+			"id": "b1c2d3e4f5a60037",
+			"type": "file",
+			"file": "2.项目/猫咪监控/14_简历项目包装.md",
+			"x": 1380,
+			"y": 1040,
+			"width": 400,
+			"height": 200
+		}
+	],
+	"edges": [
+		{
+			"id": "f000000000000001",
+			"fromNode": "b1c2d3e4f5a60001",
+			"fromSide": "bottom",
+			"toNode": "b1c2d3e4f5a60010",
+			"toSide": "top"
+		},
+		{
+			"id": "f000000000000002",
+			"fromNode": "b1c2d3e4f5a60001",
+			"fromSide": "bottom",
+			"toNode": "b1c2d3e4f5a60011",
+			"toSide": "top"
+		},
+		{
+			"id": "f000000000000003",
+			"fromNode": "b1c2d3e4f5a60001",
+			"fromSide": "bottom",
+			"toNode": "b1c2d3e4f5a60012",
+			"toSide": "top"
+		},
+		{
+			"id": "f000000000000004",
+			"fromNode": "b1c2d3e4f5a60001",
+			"fromSide": "bottom",
+			"toNode": "b1c2d3e4f5a60013",
+			"toSide": "top"
+		},
+		{
+			"id": "f000000000000011",
+			"fromNode": "b1c2d3e4f5a60010",
+			"fromSide": "bottom",
+			"toNode": "b1c2d3e4f5a60021",
+			"toSide": "top"
+		},
+		{
+			"id": "f000000000000012",
+			"fromNode": "b1c2d3e4f5a60011",
+			"fromSide": "bottom",
+			"toNode": "b1c2d3e4f5a60022",
+			"toSide": "top"
+		},
+		{
+			"id": "f000000000000013",
+			"fromNode": "b1c2d3e4f5a60012",
+			"fromSide": "bottom",
+			"toNode": "b1c2d3e4f5a60023",
+			"toSide": "top"
+		},
+		{
+			"id": "f000000000000014",
+			"fromNode": "b1c2d3e4f5a60013",
+			"fromSide": "bottom",
+			"toNode": "b1c2d3e4f5a60024",
+			"toSide": "top"
+		},
+		{
+			"id": "f000000000000021",
+			"fromNode": "b1c2d3e4f5a60030",
+			"fromSide": "right",
+			"toNode": "b1c2d3e4f5a60032",
+			"toSide": "left"
+		},
+		{
+			"id": "f000000000000022",
+			"fromNode": "b1c2d3e4f5a60031",
+			"fromSide": "right",
+			"toNode": "b1c2d3e4f5a60032",
+			"toSide": "left"
+		},
+		{
+			"id": "f000000000000023",
+			"fromNode": "b1c2d3e4f5a60032",
+			"fromSide": "right",
+			"toNode": "b1c2d3e4f5a60033",
+			"toSide": "left"
+		},
+		{
+			"id": "f000000000000024",
+			"fromNode": "b1c2d3e4f5a60032",
+			"fromSide": "bottom",
+			"toNode": "b1c2d3e4f5a60034",
+			"toSide": "top"
+		},
+		{
+			"id": "f000000000000025",
+			"fromNode": "b1c2d3e4f5a60034",
+			"fromSide": "right",
+			"toNode": "b1c2d3e4f5a60035",
+			"toSide": "left"
+		},
+		{
+			"id": "f000000000000026",
+			"fromNode": "b1c2d3e4f5a60035",
+			"fromSide": "right",
+			"toNode": "b1c2d3e4f5a60036",
+			"toSide": "left"
+		},
+		{
+			"id": "f000000000000027",
+			"fromNode": "b1c2d3e4f5a60035",
+			"fromSide": "right",
+			"toNode": "b1c2d3e4f5a60037",
+			"toSide": "left"
+		},
+		{
+			"id": "f000000000000028",
+			"fromNode": "b1c2d3e4f5a60024",
+			"fromSide": "bottom",
+			"toNode": "b1c2d3e4f5a60035",
+			"toSide": "top"
+		}
+	]
+}

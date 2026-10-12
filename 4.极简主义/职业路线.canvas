@@ -1,0 +1,143 @@
+{
+	"nodes": [
+		{
+			"id": "c1d2e3f4a5b60001",
+			"type": "text",
+			"text": "# 职业路线\n\n从\"当前阶段\"到\"半年扎根计划\"的一条线：**现状 → 目标岗位 → 能力缺口 → 落地计划**。\n\n总纲见 [[3.职业规划]]；索引见 [[00_极简主义MOC]]。",
+			"x": 40,
+			"y": -340,
+			"width": 800,
+			"height": 200
+		},
+		{
+			"id": "c1d2e3f4a5b60010",
+			"type": "text",
+			"text": "## ① 现状\n\n- 2025.06 本科毕业，入职第一份工作（MCU → Linux 转型中）\n- 2026 年底离职，翌年 2 月交接完，3 月起空窗 1–2 个月\n- 主线：技术（造）+ 摄影剪辑（讲）+ 音乐（主题曲）+ 健康（托底）",
+			"x": 0,
+			"y": 0,
+			"width": 400,
+			"height": 340
+		},
+		{
+			"id": "c1d2e3f4a5b60011",
+			"type": "text",
+			"text": "## ② 目标岗位\n\n- 方向：Linux 底层 / 嵌入式硬件原理 / 端侧 AI 部署\n- 期望：能投入 5 年以上、不后悔的公司\n- 手段：以\"猫咪监控\"作为可写进简历的真实项目",
+			"x": 460,
+			"y": 0,
+			"width": 400,
+			"height": 340
+		},
+		{
+			"id": "c1d2e3f4a5b60012",
+			"type": "text",
+			"text": "## ③ 能力缺口\n\n- 自研 Linux 发行版（rsdk / Buildroot / Yocto）\n- 驱动与设备树定制\n- 端侧 AI：RKNN / RKLLM 部署与模型裁剪\n- 判定与原则：[[定义权]]（谁来定义\"什么算完成\"）",
+			"x": 920,
+			"y": 0,
+			"width": 400,
+			"height": 340
+		},
+		{
+			"id": "c1d2e3f4a5b60013",
+			"type": "text",
+			"text": "## ④ 半年扎根计划\n\n- 一技一库：把学习沉淀成技能笔记与项目文档\n- 一项目：猫咪监控闭环到\"可验收、可讲、可演示\"\n- 一节奏：健康托底，不牺牲身体换进度",
+			"x": 1380,
+			"y": 0,
+			"width": 400,
+			"height": 340
+		},
+		{
+			"id": "c1d2e3f4a5b60020",
+			"type": "file",
+			"file": "4.极简主义/3.职业规划.md",
+			"x": 0,
+			"y": 400,
+			"width": 400,
+			"height": 200
+		},
+		{
+			"id": "c1d2e3f4a5b60021",
+			"type": "file",
+			"file": "4.极简主义/4.DeepSeek岗位匹配与职业路线.md",
+			"x": 460,
+			"y": 400,
+			"width": 400,
+			"height": 200
+		},
+		{
+			"id": "c1d2e3f4a5b60022",
+			"type": "file",
+			"file": "4.极简主义/6.独立完善个体达标框架.md",
+			"x": 920,
+			"y": 400,
+			"width": 400,
+			"height": 200
+		},
+		{
+			"id": "c1d2e3f4a5b60023",
+			"type": "file",
+			"file": "4.极简主义/9.半年扎根计划.md",
+			"x": 1380,
+			"y": 400,
+			"width": 400,
+			"height": 200
+		}
+	],
+	"edges": [
+		{
+			"id": "a000000000000001",
+			"fromNode": "c1d2e3f4a5b60001",
+			"fromSide": "bottom",
+			"toNode": "c1d2e3f4a5b60010",
+			"toSide": "top"
+		},
+		{
+			"id": "a000000000000002",
+			"fromNode": "c1d2e3f4a5b60010",
+			"fromSide": "right",
+			"toNode": "c1d2e3f4a5b60011",
+			"toSide": "left"
+		},
+		{
+			"id": "a000000000000003",
+			"fromNode": "c1d2e3f4a5b60011",
+			"fromSide": "right",
+			"toNode": "c1d2e3f4a5b60012",
+			"toSide": "left"
+		},
+		{
+			"id": "a000000000000004",
+			"fromNode": "c1d2e3f4a5b60012",
+			"fromSide": "right",
+			"toNode": "c1d2e3f4a5b60013",
+			"toSide": "left"
+		},
+		{
+			"id": "a000000000000011",
+			"fromNode": "c1d2e3f4a5b60010",
+			"fromSide": "bottom",
+			"toNode": "c1d2e3f4a5b60020",
+			"toSide": "top"
+		},
+		{
+			"id": "a000000000000012",
+			"fromNode": "c1d2e3f4a5b60011",
+			"fromSide": "bottom",
+			"toNode": "c1d2e3f4a5b60021",
+			"toSide": "top"
+		},
+		{
+			"id": "a000000000000013",
+			"fromNode": "c1d2e3f4a5b60012",
+			"fromSide": "bottom",
+			"toNode": "c1d2e3f4a5b60022",
+			"toSide": "top"
+		},
+		{
+			"id": "a000000000000014",
+			"fromNode": "c1d2e3f4a5b60013",
+			"fromSide": "bottom",
+			"toNode": "c1d2e3f4a5b60023",
+			"toSide": "top"
+		}
+	]
+}
