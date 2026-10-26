@@ -277,6 +277,23 @@ git branch -r
 git switch feature_m7a_iot
 ```
 
+
+## 接管一套新代码
+
+```bash
+git fetch --prune origin
+```
+- 拉取远程仓库`origin`的所有的最新提交、分支引用，但不会自动合并到本地分支
+- `--prune`清理本地已经不存在的分支
+
+
+```bash
+# 列出远程所有分支 + 最后提交时间，最新在前
+git for-each-ref --sort=-committerdate refs/remotes/origin/ --format='%(committerdate:short) %(refname:short) %(subject)'
+```
+- 筛选条件、筛选范围、筛选后的输出格式
+
+
 ## 常见问题
 
 ### 国内网络访问与代理
@@ -328,3 +345,10 @@ env | grep -i proxy
 | 切换分支报错 | 先提交或 `stash`，必要时 `checkout -f` 强制 |
 | 需要停用某分支 | 本地 `branch -D`，远程 `push origin --delete` |
 | 忘记当前密钥是否加载 | `ssh-add -l` 检查，未加载则重新 `ssh-add` |
+
+
+
+
+
+# Gitlab 使用
+

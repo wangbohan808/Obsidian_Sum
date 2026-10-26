@@ -332,6 +332,58 @@ TZ | Number | { Effectiveness | Week | Time(H,M) | N | [id×N] | clean_mode | fa
 
 - 所有预约项一同下发刷新；清扫模式/风机/水量不按房间区分，**预约只能整批选中房间，不能逐房间单独设置**。
 
+
+## 语法学习
+
+### 对象的生命周期
+
+```cpp
+class AposSdkIot {
+ private:
+   AposSdkIot* apos_iot_sdk_;
+   
+   
+   ServiceManager* service_manager_;
+```
+
+```cpp
+AposSdkIot *AposSdkIot::Instance() {
+    static AposSdkIot apos_iot;
+    return &apos_iot;
+}
+
+
+OperateCode AposSdkIot::apos_iot_init(Apos_Iot_Init_Param_Func init_param_func) {
+    // 先创建单列
+    LOGD("AposSdkSetEventSubscribe----------------------------");
+    
+    
+    apos_iot_sdk_ = Instance();
+```
+- 声明只是方便编译，真正实现的时候才会决定对象的性质、生命周期
+- 局部静态变量的生命周期也是整个程序
+
+
+### 拷贝赋值与拷贝构造
+
+```cpp
+T a;      // 默认构造：a 已被创建，占有一块存储
+T b;
+b = a;    // 赋值：不创建新的 b，只改 b 里已有内容
+
+# 其实本质相当于下面操作：
+b.operator=(a);   // 拷贝赋值运算符
+```
+- 本质：两个对象早已存在，赋值的意思是——让左边对象（LHS）的存储内容，在语义上变成与右边（RHS）一致，通常不释放 LHS 的名字绑定（还是同一个 `b`，还是同一块「对象身份」）
+
+
+```cpp
+T b = a;    // 或 T b(a);
+```
+- 拷贝构造，空间还没诞生
+- 这是在 创建 `b` 时用 `a` 初始化一块新存储，是 constructor，不是 assignment。
+
+
 ## 调试与问题排查
 
 ### 日志格式与关键词
