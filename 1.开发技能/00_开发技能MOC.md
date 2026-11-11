@@ -5,7 +5,7 @@ up: "[[00_总索引]]"
 tags:
   - 系统/索引
 created: "2026-10-12"
-updated: "2026-10-23"
+updated: "2026-11-04"
 ---
 
 # 开发技能 · 索引
@@ -17,7 +17,7 @@ updated: "2026-10-23"
 ## 手动分组
 
 ### 环境与系统
-[[Docker与WSL2环境]] · [[VMware Workstation Pro]] · [[Arch系统]] · [[Macbook探索使用]] · [[OrangePi4A标准工程]] · [[网络代理与换源]]
+[[Docker与WSL2环境]] · [[VMware Workstation Pro]] · [[Arch系统]] · [[硬件探索]] · [[OrangePi4A标准工程]] · [[网络代理与换源]]
 
 ### 版本控制与协作
 [[Github]]
@@ -30,6 +30,9 @@ updated: "2026-10-23"
 
 ### 嵌入式与硬件
 [[有刷直流电机驱动]] · [[Mac编译MCU]]
+
+### 音视频与多媒体
+[[音视频底层原理]]（YUV 与色彩范围 → HDMI·UVC → H.264 六步 → RTMP/SRT → A/V 同步 → V4L2·MPP·GStreamer 映射）
 
 ### 计算机基础与工具链
 [[编译链接与库文件格式]]（.o/.a/.so/.lib/.dll/.elf/.hex/.bin · 链接期踩坑 · 裸机链接） · [[计算机网络]]

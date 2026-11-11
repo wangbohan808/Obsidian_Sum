@@ -294,6 +294,31 @@ git for-each-ref --sort=-committerdate refs/remotes/origin/ --format='%(committe
 - 筛选条件、筛选范围、筛选后的输出格式
 
 
+
+
+## 打标签操作
+
+- 打标签常用流程：
+```bash
+# 1. 先确保代码已提交并推送
+git commit -am "fix: 串口重连超时"
+git push origin main
+
+# 2. 确认 HEAD 正确后打标签
+git log -1 --oneline
+git tag -a v1.0.0 -m "v1.0.0 首个正式版"
+
+# 3. 推送标签（单独一条，意图明确）
+git push origin v1.0.0
+```
+
+
+- 查看所有已经打的标签
+```bash
+git tag -n99
+```
+
+
 ## 常见问题
 
 ### 国内网络访问与代理

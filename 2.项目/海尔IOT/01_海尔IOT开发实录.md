@@ -254,6 +254,36 @@ int HaierAdapter::HaierWriteHandle(const std::string &cmd, const std::string &cm
 
 无参命令用 `std::map<int, std::function<int()>>`（`cmd_map_table_`：`DUST_COLLECTION → Cmd_StartDustCollection`、`START_SWEEP → Cmd_StartTotalClean` 等，即采集-组包-上报）。
 
+
+**两者最常用的用法如下：**
+
+```cpp
+std::function<int32_t(const BinPack&, BinPack&)> f =
+    std::bind(&TaskControl::Cmd_Mode, &task, std::placeholders::_1, std::placeholders::_2);
+
+int32_t ret = f(req, rep);   // 等价于 task.Cmd_Mode(req, rep)
+```
+- **std::bind绑定的结果使用std::function接收，然后接收后的实例直接加上括号就可以传入参数直接进行调用**
+
+
+两种语法结构如下：
+
+```cpp
+std::bind(&类名::成员函数, 对象指针, 参数1, 参数2, ...)
+```
+- 绑定后的结果有点类似于函数指针
+
+```cpp
+std::function<返回类型(参数类型1, 参数类型2)> 变量 = 可调用对象;
+返回类型 结果 = 变量(实参1, 实参2);
+```
+- 函数类型其实也是作为函数指针的使用方法
+
+- 因此两者可以本质上是一致的
+- 使用`std::function`接收`std::bind`绑定的结果
+
+
+
 ### 写回调（云端下发 → 本地执行 → 应答）
 
 ```cpp
@@ -324,6 +354,24 @@ RegisterServer("/Map/GetSegmentEmpty", &UiMapProtocol::GetSegemntEmptyServer, th
 
 - 嵌套类 `StdIntSrv::Request/Response` 继承 `apos_serialize::IMessage`；数据经共享内存回填 `response.area_info`。
 
+
+### 注册服务函数实现原理
+
+```cpp
+  template <typename CLASSPTR, typename REQ, typename REP>
+  static void RegisterServer(const std::string& server_key, int32_t (CLASSPTR::*register_func)(REQ, REP), CLASSPTR *obj) {
+    ServiceManagerPtr service_worker(new ServiceWorker<REQ, REP>(
+            std::bind(register_func, obj, std::placeholders::_1, std::placeholders::_2)));
+    service_map_[server_key] = std::move(service_worker);
+  };
+```
+- `std::bind(register_func, obj, std::placeholders::_1, std::placeholders::_2)` 将传入的函数，传入一个对象参数，就会变成需要传入`REQ, REP`两个参数的特殊的可调用对象（函数指针）
+- `new ServiceWorker<REQ, REP>`使用特殊的类的构造函数--这种构造函数是传入一个函数指针作为成员变量，后续使用`call`函数就可以进行调用
+- `using ServiceManagerPtr = std::unique_ptr<ServiceWorkerBase>;`使用智能指针管理这一个类，构造函数直接构造这个智能指针类型的实例，然后传入这个类型指针进行管理
+- `service_map_[server_key] = std::move(service_worker);`将这个后续可以被使用的对象指针，传入map中，方便后续进行调用
+
+
+
 ### 预约协议
 
 ```text
@@ -331,6 +379,113 @@ TZ | Number | { Effectiveness | Week | Time(H,M) | N | [id×N] | clean_mode | fa
 ```
 
 - 所有预约项一同下发刷新；清扫模式/风机/水量不按房间区分，**预约只能整批选中房间，不能逐房间单独设置**。
+
+
+### 句柄的理解
+
+```cpp
+handler_ = AposSdkInit(authentication_key, server_ip);
+```
+- 将authentication_key、IP地址写进apossdk，会返回一个int32的句柄；在apossdk中，会进行维护一个类似于键值对，使得传入句柄就知道注册表与IP地址信息，从而与指定进程建立通信
+- `authentication_key`用来进行鉴权，扫地机本机进行鉴权之后，决定此次连接是否允许调用扫地机本机的相关参数
+
+```cpp
+#define APOS_SDK_HANDLER  apos_iot_sdk::AposSdkIot::Instance()->GetAposHandler()
+```
+- apossdkiot初始化获得句柄之后，使用宏进行储存，方便后续进行调用
+
+使用场景：
+凡是进程之间的通信，第一个参数都是句柄用来定位。如`AposSdkSetEventSubscribe`、`AposSdkSendEvent`、`AposSdkRead` / `AposSdkWrite`
+
+
+
+| API | 作用 | 是否等待对方结果 | 主要参数 | 本项目中的例子 |
+|---|---|---|---|---|
+| `AposSdkInit` | 建立到本机 `apos_server` 的连接，把套接字、鉴权结果、IP 写入连接表 | 调用期间完成连接 | 许可证、IP | `AposSdkInit(key, "127.0.0.1")`，返回值存入 `handler_` |
+| `AposSdkSetEventSubscribe` | 在这条连接上登记要接收的事件和回调 | 登记完成后返回；事件以后异步回调 | 句柄、回调、事件名数组、数组长度 | 订阅 `sub_topic`，回调 `apos_sdk_event_handle` |
+| `AposSdkSendEvent` | 发出事件，不等执行结果 | 否，发出去就返回 | 句柄、事件名、`BinPack` | `"/TaskManager/PauseClean"` |
+| `AposSdkService` | 发出事件并等待返回数据 | 是，直到收到 `out_msg` 或超时 | 句柄、事件名、输入包、输出包、超时 | `"/WifiModule/GetMacAddr"`，超时 5000 毫秒 |
+| `AposSdkRead` | 按路径读取属性或文件 | 是，直到读到数据或超时 | 句柄、输入包、输出包、超时 | 读 `"/WifiModule/WifiMode"`、`"/ParamManager/Data"` |
+| `AposSdkWrite` | 按路径写入属性、参数、文件或日志 | 是，直到写完或超时 | 句柄、输入包、超时 | 写 `"/ParamManager/Data"`、`"/System/FileOp"`、`"/System/CustomLog"` |
+| `AposSdkDeInit` | 关闭句柄对应的套接字，删除这条连接记录 | 关闭完成后返回 | 句柄 | 仅在 `apos_iot_stop` 中调用 |
+
+返回值约定：`0` 表示成功，小于 `0` 表示失败。除 `AposSdkInit` 返回的是句柄以外，其余接口的第一个参数都是这个句柄。
+
+
+### 函数指针
+
+**函数指针与成员函数指针还是不同的，使用方式上也有一些区别与限制。**
+
+
+
+### 数据传输编解码
+
+**无论是Json还是BinPack，各种协议、文件格式都是为了方便记录以及传输：**
+定义一种数据格式-->编码为字节流进行传输-->接收方进行解码进行还原
+
+
+```txt
+JSON 字符流
+{"Volume":30,"IsPlay":true}
+分隔符是 { } " : ,
+数字 30 是字符 '3' 和 '0'，不是 4 字节整数
+true 是四个字母
+
+BinPack 记录流
+[ Volume | type=6  | 整数 30 的 4 字节 | 长度 ]
+[ IsPlay | type=12 | true 的 1 字节    | 长度 ]
+下一条靠本条长度跳转
+30 的宽度由标签 6 规定为 int32
+```
+
+类型标签（`binpack.h`）：
+
+|标签|值|写入|读出|
+|---|---|---|---|
+|INT32|6|`SetInt32`|`AsInt32`|
+|BOOL|12|`SetBool`|`AsBool`|
+|STRING|13|`SetString`|`AsString`|
+|BINARY|14|`SetBinary`|`AsBinary`|
+|ARRAY|15|`SetArray`|`AsArray`|
+|OBJECT|16|`SetObject`|`AsObject`|
+|JSON|18|`SetJson`|`AsJson`|
+
+- 有些特殊位置字节含义是固定的，长度会根据上述标签对应的字节进行动态变化
+- 至于如何保证字节传输稳定性，可以参考基站红外通讯协议，这个属于传输层的事情
+
+
+
+### BinPack数据类型的理解
+
+
+```text
+data_bin = {
+  "/MapData/SegmentSlamMapDataDirect": {
+    "Width": ...,
+    "Height": ...,
+    "Data": ...
+  }
+}
+```
+
+- 将上述最初的结构，处理掉最外一层，得到的仍然是BinPack
+```cpp
+int AsObject(std::string key, BinPack& object);
+
+data_bin.AsObject("/MapData/SegmentSlamMapDataDirect", out_bin);
+```
+
+
+写入以及读取：
+```cpp
+//往对象中写入一条条键值对
+in_msg.SetUint32("offset", offset);
+msg1.SetObject("/MapData/SegmentSlamMapDataDirect", in_msg);
+
+//从对象中读取进行输出
+out_bin.AsUint64("map_update_time", ts);   // 取出 uint64，写入 ts
+out_bin.AsInt32("Width", response.width);  // 取出 int32，写入 width
+```
 
 
 ## 语法学习
@@ -382,6 +537,157 @@ T b = a;    // 或 T b(a);
 ```
 - 拷贝构造，空间还没诞生
 - 这是在 创建 `b` 时用 `a` 初始化一块新存储，是 constructor，不是 assignment。
+
+
+
+### 构造函数语法知识
+
+```cpp
+    HaierSdkNetwork()                                  = default;
+    ~HaierSdkNetwork()                                 = default;
+    HaierSdkNetwork(const HaierSdkNetwork&)            = delete;
+    HaierSdkNetwork& operator=(const HaierSdkNetwork&) = delete;
+```
+- 如果开发者没有书写自己的构造函数，拷贝构造、拷贝赋值、移动构造、移动赋值都可以自动存在
+- 只要类里出现了任何一个你自己声明的构造函数，编译器就不再自动生成无参的默认构造。
+- 删除拷贝，本身也是一个构造函数声明；后续有“`new T()`，必须有无参构造”
+- 所以第一行要把被挤掉的默认构造加回来
+
+
+### C++指针
+
+**裸指针必须手动释放，智能指针会根据作用阈范围自动释放：**
+
+```cpp
+UiMapProtocol* map_ = new UiMapProtocol();
+map_->Init();
+delete map_;     // 有人记得写，才和 unique_ptr 等价
+```
+
+```cpp
+std::unique_ptr<UiMapProtocol> map_(new UiMapProtocol());
+map_->Init();
+```
+
+智能指针常见的有两种：
+1. 独享空间的智能指针，一个指针作用域结束直接释放资源： `std::unique_ptr`
+2. 共享指针，所有资源结束作用域，才会进行释放指针： `std::share_ptr`
+
+
+### explicit关键字理解
+
+- 智能指针是一个类模板，传入“基类”类型后变为模板类
+```cpp
+template<typename T>
+class unique_ptr {
+public:
+    using pointer = T*;
+
+    explicit unique_ptr(pointer p) noexcept;   // explicit 在这里
+
+    template<typename U>
+    unique_ptr(unique_ptr<U>&& other) noexcept; // 这个没有 explicit
+};
+```
+
+```cpp
+class unique_ptr<ServiceWorkerBase> {
+public:
+    using pointer = ServiceWorkerBase*;
+
+    // 构造函数 A：参数是基类原始指针，标了 explicit
+    explicit unique_ptr(ServiceWorkerBase* p) noexcept;
+
+    // 构造函数 B：参数是另一个 unique_ptr 临时对象，没有 explicit
+    template<typename U>
+    unique_ptr(unique_ptr<U>&& other) noexcept;
+};
+```
+- 上面两种构造函数，实际使用如下：
+- `noexcept` 写在参数列表后面，表示这个构造函数不会抛出异常。
+- `&&` 表示这个参数绑定右值；在你的那行代码里，等号右边的智能指针没有变量名，所以它是临时对象
+
+
+- **构造函数A--原始指针--代表着在括号里使用`new`创建指针**
+- **构造函数B--智能指针--构造一个临时对象进行接收**
+
+
+- 两种构造函数书写形式如下：
+```cpp
+using ServiceManagerPtr = std::unique_ptr<ServiceWorkerBase>;
+
+  template<typename CLASSPTR>
+  static void RegisterServer(const std::string& server_key, int32_t (CLASSPTR::*register_func)(), CLASSPTR *obj) {
+    ServiceManagerPtr service_worker = std::unique_ptr<ServiceWorker<void, void>>(new ServiceWorker<void, void>(std::bind(register_func, obj)));
+    service_map_[server_key] = std::move(service_worker);
+  };
+
+  template <typename CLASSPTR, typename REQ, typename REP>
+  static void RegisterServer(const std::string& server_key, int32_t (CLASSPTR::*register_func)(REQ, REP), CLASSPTR *obj) {
+    ServiceManagerPtr service_worker(new ServiceWorker<REQ, REP>(
+            std::bind(register_func, obj, std::placeholders::_1, std::placeholders::_2)));
+    service_map_[server_key] = std::move(service_worker);
+  };
+```
+
+1. **传参方式进行构造有两种：括号是直接初始化，等号是拷贝初始化。**
+2. 根据传参方式选择对应的构造函数
+
+
+### 继承与虚函数
+
+前两句的方向是对的，第三句把函数放进了对象的数据布局里。成员变量按“基类在前、派生类在后”排列；函数放在代码段里，不占用对象中基类数据后面的空间。
+
+**继承时对象里有什么**
+
+**单继承时，派生类对象的开头是完整的基类部分，派生类自己的成员变量接在后面。**`GetShowMapData` 那个对象就是：
+
+```text
+基类部分：vptr、service
+派生类部分：register_func_
+```
+
+`vptr` 属于基类部分，因为虚函数是 `ServiceWorkerBase` 先声明的。`register_func_` 是派生类新增的数据，加在基类部分之后。基类原有成员的相对位置不变。
+
+成员函数不在这段内存里。基类的 `Call` 和派生类的 `Call` 都是程序代码段中的函数，对象里没有一份“函数数据”可以往后追加。
+
+**虚函数替换的是表里的地址**
+
+派生类不会改基类那张虚函数表，也不会改基类函数的代码。编译器给派生类另做一张表。签名相同的虚函数，在派生类这张表的对应格子里，写入派生类函数的地址。
+
+`ServiceWorkerBase` 的表：
+
+```text
+第 0 格：没有 IMessage 版本的函数体
+第 1 格：ServiceWorkerBase::Call(BinPack&, BinPack&)
+```
+
+`ServiceWorker<const REQ &, REP &>` 的表：
+
+```text
+第 0 格：这个派生类的 Call(IMessage*, IMessage*)
+第 1 格：仍是 ServiceWorkerBase::Call(BinPack&, BinPack&)
+```
+
+对象里的 `vptr` 指向第二张表。通过基类指针调用 `Call(IMessage*, IMessage*)` 时，读到的是第 0 格的派生类地址。第 1 格没有换，所以 `BinPack` 版本仍执行基类的 `return 0`。
+
+这里的“同名、同参数”指的是虚函数签名一致，派生类这份函数才算重写，才能占住同一个格子。
+
+**非虚函数不会放在数据结构下面**
+
+派生类再写一个同名、同参数的普通函数，基类函数的代码还在，对象内存也不会多出一个函数指针。这是两个独立函数，派生类的名字把基类的名字隐藏起来。
+
+调用哪一个，编译器看的是指针或对象的声明类型：
+
+```cpp
+ServiceWorkerBase* base = derived_object;
+base->普通函数();      // 编译器直接调用基类的函数
+derived_object->普通函数(); // 编译器直接调用派生类的函数
+```
+
+`base` 指向的对象里即使有派生类新增的 `register_func_`，普通函数调用也不会去查 `vptr`。基类函数因此碰不到派生类后半段里的数据。
+
+虚函数才把选择权放到对象的 `vptr` 上。基类指针调用时，先进入派生类那份 `Call`，这份函数按派生类编译，所以能使用排在基类数据后面的 `register_func_`。
 
 
 ## 调试与问题排查
