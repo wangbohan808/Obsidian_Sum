@@ -5,7 +5,7 @@ up: "[[00_总索引]]"
 tags:
   - 系统/索引
 created: "2026-10-12"
-updated: "2026-11-04"
+updated: "2026-11-11"
 ---
 
 # 开发技能 · 索引
@@ -32,7 +32,7 @@ updated: "2026-11-04"
 [[有刷直流电机驱动]] · [[Mac编译MCU]]
 
 ### 音视频与多媒体
-[[音视频底层原理]]（YUV 与色彩范围 → HDMI·UVC → H.264 六步 → RTMP/SRT → A/V 同步 → V4L2·MPP·GStreamer 映射）
+[[音视频底层原理]]（YUV 与色彩范围 → HDMI·UVC → H.264 六步 → RTMP/SRT → A/V 同步 → V4L2·MPP·GStreamer 映射） · [[手机作音视频实验台]]（iPhone 当「可控视频源 + 色彩基准 + 元数据样本库」：ffprobe 元数据路径 0 元、HDMI 采集路径 ≈150 元、ProRes RAW ↔ ISP 前端）
 
 ### 计算机基础与工具链
 [[编译链接与库文件格式]]（.o/.a/.so/.lib/.dll/.elf/.hex/.bin · 链接期踩坑 · 裸机链接） · [[计算机网络]]
