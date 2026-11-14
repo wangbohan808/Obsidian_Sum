@@ -166,17 +166,17 @@ Project（.logicx 包 = 一个文件夹）
 
 ### A. 音源（声音从哪来）
 
-| 功能 | 是什么 | 什么时候学 |
-|---|---|---|
-| **Software Instrument 轨** | 虚拟乐器轨，接收 MIDI | **Day 1** |
-| **Audio 轨** | 录真实声音（人声、吉他） | **Day 1** |
-| **Drummer** | 虚拟鼓手，选风格+复杂度自动生成，可编辑 | **Day 1**（最快出成品） |
-| **Apple Loops** | 现成乐句，拖入自动匹配 BPM 与调性 | **Day 1** |
-| **Session Player** | 键盘/贝斯/鼓手的"虚拟乐手"，比 Drummer 更懂和声进行 | Week 2 |
-| **Quick Sampler** | 拖一个音频进去就变成可演奏乐器（做音效、采样） | Week 3 |
-| **Sampler (EXS24)** | 多层采样器，映射多个音区与力度层 | 需要时 |
-| **Alchemy** | 重量级合成器（加法/波表/颗粒/采样），Logic 最强音源 | Month 2+ |
-| **Retro Synths** | ES2 / Retro Synth / Sculpture 等经典合成器 | Month 2+ |
+| 功能                        | 是什么                                  | 什么时候学            |
+| ------------------------- | ------------------------------------ | ---------------- |
+| **Software Instrument 轨** | 虚拟乐器轨，接收 MIDI                        | **Day 1**        |
+| **Audio 轨**               | 录真实声音（人声、吉他）                         | **Day 1**        |
+| **Drummer**               | 虚拟鼓手，选风格+复杂度自动生成，可编辑                 | **Day 1**（最快出成品） |
+| **Apple Loops**           | 现成乐句，拖入自动匹配 BPM 与调性                  | **Day 1**        |
+| **Session Player**        | 键盘/贝斯/鼓手的"虚拟乐手"，比 Drummer 更懂和声进行     | Week 2           |
+| **Quick Sampler**         | 拖一个音频进去就变成可演奏乐器（做音效、采样）              | Week 3           |
+| **Sampler (EXS24)**       | 多层采样器，映射多个音区与力度层                     | 需要时              |
+| **Alchemy**               | 重量级合成器（加法/波表/颗粒/采样），Logic 最强音源       | Month 2+         |
+| **Retro Synths**          | ES2 / Retro Synth / Sculpture 等经典合成器 | Month 2+         |
 
 ### B. 编排
 
@@ -204,14 +204,14 @@ Project（.logicx 包 = 一个文件夹）
 
 ### D. 音频处理
 
-| 功能 | 是什么 | 什么时候学 |
-|---|---|---|
-| **Flex Time** | 不改变音高的时间伸缩（修节奏） | Week 3 |
-| **Flex Pitch** | 改音高（修音准，可手动或一键） | Week 3 |
-| **Stem Splitter** | 把成品音频拆成人声/鼓/贝斯/其他（13.0 可把鼓再拆成 kick/snare/hihat/toms/cymbals） | 需要采样或重混时 |
-| **Audio File Editor** | 破坏性编辑（去杂音、剪掉开头、反转） | 需要时 |
-| **Pitch Shifter / Varispeed** | 变调 / 变速 | 需要时 |
-| **Bounce in Place** | 把一条轨"烤"成音频，释放 CPU | Week 2（工程卡了就靠它） |
+| 功能                            | 是什么                                                          | 什么时候学           |
+| ----------------------------- | ------------------------------------------------------------ | --------------- |
+| **Flex Time**                 | 不改变音高的时间伸缩（修节奏）                                              | Week 3          |
+| **Flex Pitch**                | 改音高（修音准，可手动或一键）                                              | Week 3          |
+| **Stem Splitter**             | 把成品音频拆成人声/鼓/贝斯/其他（13.0 可把鼓再拆成 kick/snare/hihat/toms/cymbals） | 需要采样或重混时        |
+| **Audio File Editor**         | 破坏性编辑（去杂音、剪掉开头、反转）                                           | 需要时             |
+| **Pitch Shifter / Varispeed** | 变调 / 变速                                                      | 需要时             |
+| **Bounce in Place**           | 把一条轨"烤"成音频，释放 CPU                                            | Week 2（工程卡了就靠它） |
 
 ### E. 效果器（按用途记，别按名字记）
 
