@@ -1,23 +1,27 @@
 {
 	"nodes":[
-		{"id":"a1b2c3d4e5f60003","type":"group","x":-40,"y":130,"width":1940,"height":1090,"label":"在研 / 已交付项目"},
-		{"id":"a1b2c3d4e5f60001","type":"text","text":"# 项目地图\n\n全库项目的全局视图。\n\n- 每个项目以文件夹内的 `00_xx总览` 为**唯一 hub**\n- 明细不再手写清单，由 hub 里的 Dataview 自动汇总\n- 索引入口：[[00_项目MOC]]","x":40,"y":-320,"width":760,"height":200},
-		{"id":"a1b2c3d4e5f60011","type":"file","file":"2.项目/CW32固件/00_CW32固件总览.md","x":480,"y":180,"width":420,"height":460},
-		{"id":"a1b2c3d4e5f60012","type":"file","file":"2.项目/桌面像素台灯/00_桌面像素台灯总览.md","x":960,"y":180,"width":420,"height":460},
-		{"id":"a1b2c3d4e5f60013","type":"file","file":"2.项目/MES海康相机/01_MES系统与海康相机.md","x":1440,"y":180,"width":420,"height":460},
-		{"id":"a1b2c3d4e5f60014","type":"file","file":"2.项目/海尔IOT/01_海尔IOT开发实录.md","x":0,"y":700,"width":420,"height":460},
-		{"id":"a1b2c3d4e5f60015","type":"file","file":"2.项目/海能缺陷检测/VM使用系列课程-学习笔记.md","x":480,"y":700,"width":420,"height":460},
-		{"id":"a1b2c3d4e5f60016","type":"file","file":"2.项目/芯源集尘桶/01_芯源集尘桶项目.md","x":960,"y":700,"width":420,"height":460},
-		{"id":"a1b2c3d4e5f60010","type":"file","file":"2.项目/猫咪监控/00_总览与学习路线.md","x":0,"y":180,"width":420,"height":460},
-		{"id":"a1b2c3d4e5f60002","type":"file","file":"2.项目/00_项目MOC.md","x":280,"y":-80,"width":480,"height":180}
+		{"id":"title","type":"text","text":"# 项目地图 · 2026-11 重建\n\n**11 个项目**（`2.项目`），节点为各项目的 hub 笔记，分组 = 当前主线。\n\n| 分组 | 项目 |\n| --- | --- |\n| 交付主线 | CW32固件 · MES海康相机 · 海尔IOT · 芯源集尘桶 |\n| 作品学习 | 猫咪监控 · RK3588推流终端 · 海能缺陷检测 |\n| 副业内容 | 异人之下 · 视听创作 |\n| 孵化拆解 | 桌面像素台灯 · 逆向工程 |\n\n旧版只覆盖 7 个项目；本版补齐 11 个并按状态重排。状态以各 hub 的 `status` 与 `00_项目MOC` 为准，更新于 2026-11-14。","x":0,"y":-300,"width":1780,"height":300},
+		{"id":"moc","type":"file","file":"2.项目/00_项目MOC.md","x":680,"y":20,"width":420,"height":110},
+		{"id":"g-delivery","type":"group","label":"交付主线 · 在研","x":0,"y":180,"width":840,"height":820,"color":"1"},
+		{"id":"g-works","type":"group","label":"作品学习 · 求职","x":900,"y":180,"width":840,"height":820,"color":"4"},
+		{"id":"g-side","type":"group","label":"副业内容","x":0,"y":1080,"width":840,"height":460,"color":"5"},
+		{"id":"g-incubate","type":"group","label":"孵化拆解","x":900,"y":1080,"width":840,"height":460,"color":"6"},
+		{"id":"p-cw32","type":"file","file":"2.项目/CW32固件/00_CW32固件总览.md","x":30,"y":250,"width":370,"height":330},
+		{"id":"p-mes","type":"file","file":"2.项目/MES海康相机/01_MES系统与海康相机.md","x":430,"y":250,"width":370,"height":330},
+		{"id":"p-haier","type":"file","file":"2.项目/海尔IOT/01_海尔IOT开发实录.md","x":30,"y":620,"width":370,"height":330},
+		{"id":"p-xinyuan","type":"file","file":"2.项目/芯源集尘桶/01_芯源集尘桶项目.md","x":430,"y":620,"width":370,"height":330},
+		{"id":"p-cat","type":"file","file":"2.项目/猫咪监控/00_总览与学习路线.md","x":930,"y":250,"width":370,"height":330},
+		{"id":"p-rk3588","type":"file","file":"2.项目/RK3588推流终端/01_项目定位与简历路径.md","x":1330,"y":250,"width":370,"height":330},
+		{"id":"p-haineng","type":"file","file":"2.项目/海能缺陷检测/VM使用系列课程-学习笔记.md","x":930,"y":620,"width":370,"height":330},
+		{"id":"p-yiren","type":"file","file":"2.项目/异人之下/03_三测窗口与起号路径.md","x":30,"y":1150,"width":370,"height":330},
+		{"id":"p-audio","type":"file","file":"2.项目/视听创作/00_视听创作总览.md","x":430,"y":1150,"width":370,"height":330},
+		{"id":"p-lamp","type":"file","file":"2.项目/桌面像素台灯/00_桌面像素台灯总览.md","x":930,"y":1150,"width":370,"height":330},
+		{"id":"p-reverse","type":"file","file":"2.项目/逆向工程/逆向-海尔IOT.md","x":1330,"y":1150,"width":370,"height":330}
 	],
 	"edges":[
-		{"id":"e000000000000001","fromNode":"a1b2c3d4e5f60002","fromSide":"bottom","toNode":"a1b2c3d4e5f60010","toSide":"top"},
-		{"id":"e000000000000002","fromNode":"a1b2c3d4e5f60002","fromSide":"bottom","toNode":"a1b2c3d4e5f60011","toSide":"top"},
-		{"id":"e000000000000003","fromNode":"a1b2c3d4e5f60002","fromSide":"bottom","toNode":"a1b2c3d4e5f60012","toSide":"top"},
-		{"id":"e000000000000004","fromNode":"a1b2c3d4e5f60002","fromSide":"bottom","toNode":"a1b2c3d4e5f60013","toSide":"top"},
-		{"id":"e000000000000005","fromNode":"a1b2c3d4e5f60002","fromSide":"bottom","toNode":"a1b2c3d4e5f60014","toSide":"top"},
-		{"id":"e000000000000006","fromNode":"a1b2c3d4e5f60002","fromSide":"bottom","toNode":"a1b2c3d4e5f60015","toSide":"top"},
-		{"id":"e000000000000007","fromNode":"a1b2c3d4e5f60002","fromSide":"bottom","toNode":"a1b2c3d4e5f60016","toSide":"top"}
+		{"id":"e-moc-cw32","fromNode":"moc","fromSide":"bottom","toNode":"p-cw32","toSide":"top"},
+		{"id":"e-moc-cat","fromNode":"moc","fromSide":"bottom","toNode":"p-cat","toSide":"top"},
+		{"id":"e-moc-yiren","fromNode":"moc","fromSide":"bottom","toNode":"p-yiren","toSide":"top"},
+		{"id":"e-moc-lamp","fromNode":"moc","fromSide":"bottom","toNode":"p-lamp","toSide":"top"}
 	]
 }

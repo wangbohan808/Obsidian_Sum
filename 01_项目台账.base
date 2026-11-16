@@ -1,0 +1,29 @@
+filters:
+  and:
+    - file.inFolder("2.项目")
+    - file.ext == "md"
+properties:
+  file.name:
+    displayName: 笔记
+  project:
+    displayName: 项目
+  type:
+    displayName: 类型
+  status:
+    displayName: 状态
+  file.folder:
+    displayName: 文件夹
+  file.mtime:
+    displayName: 更新
+views:
+  - type: table
+    name: 项目台账
+    groupBy:
+      property: project
+      direction: ASC
+    order:
+      - file.name
+      - type
+      - status
+      - file.folder
+      - file.mtime

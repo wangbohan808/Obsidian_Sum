@@ -1,0 +1,28 @@
+filters:
+  and:
+    - file.ext == "md"
+properties:
+  file.name:
+    displayName: 笔记
+  file.folder:
+    displayName: 分区
+  type:
+    displayName: 类型
+  status:
+    displayName: 状态
+  tags:
+    displayName: 标签
+  file.mtime:
+    displayName: 更新
+views:
+  - type: table
+    name: 全库台账
+    groupBy:
+      property: file.folder
+      direction: ASC
+    order:
+      - file.name
+      - type
+      - status
+      - tags
+      - file.mtime
