@@ -1,0 +1,21 @@
+<svg width="680" viewBox="0 0 680 240" role="img" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+<title>线性插值与缓动插值</title>
+<desc>两个关键帧之间的参数变化速度由插值曲线决定</desc>
+<line x1="100" y1="34" x2="130" y2="34" stroke="#185FA5" stroke-width="2"/>
+<text x="138" y="38" font-size="12" fill="#0C447C" dominant-baseline="central">线性：匀速变化，机械感</text>
+<line x1="330" y1="34" x2="360" y2="34" stroke="#534AB7" stroke-width="2"/>
+<text x="368" y="38" font-size="12" fill="#3C3489" dominant-baseline="central">缓动：起步慢、中段快、收尾慢</text>
+<line x1="100" y1="60" x2="100" y2="200" stroke="#B4B2A9" stroke-width="0.5"/>
+<line x1="100" y1="200" x2="440" y2="200" stroke="#B4B2A9" stroke-width="0.5"/>
+<text x="92" y="64" text-anchor="end" font-size="11" fill="#888780" dominant-baseline="central">100%</text>
+<text x="92" y="200" text-anchor="end" font-size="11" fill="#888780" dominant-baseline="central">0%</text>
+<text x="100" y="216" text-anchor="middle" font-size="11" fill="#888780" dominant-baseline="central">0s</text>
+<text x="440" y="216" text-anchor="middle" font-size="11" fill="#888780" dominant-baseline="central">2s</text>
+<path d="M100 200 L440 60" fill="none" stroke="#185FA5" stroke-width="2"/>
+<path d="M100 200 C170 200 340 60 440 60" fill="none" stroke="#534AB7" stroke-width="2"/>
+<circle cx="100" cy="200" r="4.5" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.5"/>
+<circle cx="440" cy="60" r="4.5" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.5"/>
+<text x="112" y="192" font-size="11" fill="#5F5E5A">关键帧 A</text>
+<text x="428" y="78" text-anchor="end" font-size="11" fill="#5F5E5A">关键帧 B</text>
+<text x="100" y="234" font-size="11" fill="#888780">中间所有帧由曲线插值自动生成，你只需要决定曲线形状</text>
+</svg>

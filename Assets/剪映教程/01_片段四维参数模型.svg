@@ -1,0 +1,26 @@
+<svg width="680" viewBox="0 0 680 216" role="img" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+<title>片段的四个可编辑维度</title>
+<desc>时间、空间、外观、声音四组参数构成一个片段的全部可编辑性</desc>
+<rect x="40" y="44" width="132" height="92" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="106" y="70" text-anchor="middle" font-size="14" font-weight="500" fill="#0C447C">时间</text>
+<text x="106" y="92" text-anchor="middle" font-size="12" fill="#185FA5">入点 · 出点</text>
+<text x="106" y="108" text-anchor="middle" font-size="12" fill="#185FA5">速度 · 倒放</text>
+<text x="106" y="124" text-anchor="middle" font-size="12" fill="#185FA5">定格 · 时长</text>
+<rect x="196" y="44" width="132" height="92" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text x="262" y="70" text-anchor="middle" font-size="14" font-weight="500" fill="#085041">空间</text>
+<text x="262" y="92" text-anchor="middle" font-size="12" fill="#0F6E56">位置 x · y</text>
+<text x="262" y="108" text-anchor="middle" font-size="12" fill="#0F6E56">缩放 · 旋转</text>
+<text x="262" y="124" text-anchor="middle" font-size="12" fill="#0F6E56">裁剪 · 镜像</text>
+<rect x="352" y="44" width="132" height="92" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text x="418" y="70" text-anchor="middle" font-size="14" font-weight="500" fill="#3C3489">外观</text>
+<text x="418" y="92" text-anchor="middle" font-size="12" fill="#534AB7">调色 · 滤镜</text>
+<text x="418" y="108" text-anchor="middle" font-size="12" fill="#534AB7">混合 · 蒙版</text>
+<text x="418" y="124" text-anchor="middle" font-size="12" fill="#534AB7">抠像 · 特效</text>
+<rect x="508" y="44" width="132" height="92" rx="10" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text x="574" y="70" text-anchor="middle" font-size="14" font-weight="500" fill="#633806">声音</text>
+<text x="574" y="92" text-anchor="middle" font-size="12" fill="#854F0B">音量 · 包络</text>
+<text x="574" y="108" text-anchor="middle" font-size="12" fill="#854F0B">淡入淡出</text>
+<text x="574" y="124" text-anchor="middle" font-size="12" fill="#854F0B">降噪 · 变声</text>
+<rect x="40" y="156" width="600" height="40" rx="8" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.5"/>
+<text x="340" y="180" text-anchor="middle" font-size="13" fill="#5F5E5A" dominant-baseline="central">剪映里每一个按钮，最终都只是在改这四组参数中的一个</text>
+</svg>

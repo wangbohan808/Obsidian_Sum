@@ -1,0 +1,21 @@
+<svg width="680" viewBox="0 0 680 236" role="img" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+<title>空间、数值、时间三个正交维度</title>
+<desc>蒙版管空间，调色与滤镜管数值，关键帧管时间</desc>
+<rect x="40" y="52" width="180" height="104" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="130" y="80" text-anchor="middle" font-size="14" font-weight="500" fill="#0C447C" dominant-baseline="central">空间 · 哪里</text>
+<text x="130" y="104" text-anchor="middle" font-size="12" fill="#185FA5" dominant-baseline="central">蒙版 · 裁剪 · 抠像</text>
+<text x="130" y="124" text-anchor="middle" font-size="12" fill="#185FA5" dominant-baseline="central">输出一张权重图</text>
+<text x="130" y="142" text-anchor="middle" font-size="12" fill="#185FA5" dominant-baseline="central">决定像素的“参与度”</text>
+<rect x="250" y="52" width="180" height="104" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text x="340" y="80" text-anchor="middle" font-size="14" font-weight="500" fill="#085041" dominant-baseline="central">数值 · 变成什么</text>
+<text x="340" y="104" text-anchor="middle" font-size="12" fill="#0F6E56" dominant-baseline="central">调色 · 滤镜 · 混合</text>
+<text x="340" y="124" text-anchor="middle" font-size="12" fill="#0F6E56" dominant-baseline="central">重写每个像素的值</text>
+<text x="340" y="142" text-anchor="middle" font-size="12" fill="#0F6E56" dominant-baseline="central">决定“长什么样”</text>
+<rect x="460" y="52" width="180" height="104" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text x="550" y="80" text-anchor="middle" font-size="14" font-weight="500" fill="#3C3489" dominant-baseline="central">时间 · 什么时候</text>
+<text x="550" y="104" text-anchor="middle" font-size="12" fill="#534AB7" dominant-baseline="central">关键帧 · 曲线变速</text>
+<text x="550" y="124" text-anchor="middle" font-size="12" fill="#534AB7" dominant-baseline="central">把上面两者写成函数</text>
+<text x="550" y="142" text-anchor="middle" font-size="12" fill="#534AB7" dominant-baseline="central">决定“怎么变过去”</text>
+<rect x="40" y="172" width="600" height="44" rx="8" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.5"/>
+<text x="340" y="194" text-anchor="middle" font-size="13" fill="#2C2C2A" dominant-baseline="central">成片像素 = 像素值（调色／滤镜） × 权重（蒙版） × 时间函数（关键帧）</text>
+</svg>

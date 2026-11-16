@@ -1,0 +1,39 @@
+<svg width="680" viewBox="0 0 680 248" role="img" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+<title>素材帧率与时间轴帧率的重采样</title>
+<desc>二十四帧每秒的素材放进三十帧每秒的时间轴，每秒产生六帧重复</desc>
+<text x="40" y="90" font-size="12" fill="#2C2C2A" dominant-baseline="central">素材 12 帧</text>
+<text x="40" y="155" font-size="12" fill="#2C2C2A" dominant-baseline="central">时间轴 15 帧</text>
+<circle cx="150.4" cy="86" r="5" fill="#378ADD"/>
+<circle cx="191.2" cy="86" r="5" fill="#378ADD"/>
+<circle cx="232" cy="86" r="5" fill="#378ADD"/>
+<circle cx="272.8" cy="86" r="5" fill="#378ADD"/>
+<circle cx="313.6" cy="86" r="5" fill="#378ADD"/>
+<circle cx="354.4" cy="86" r="5" fill="#378ADD"/>
+<circle cx="395.2" cy="86" r="5" fill="#378ADD"/>
+<circle cx="436" cy="86" r="5" fill="#378ADD"/>
+<circle cx="476.8" cy="86" r="5" fill="#378ADD"/>
+<circle cx="517.6" cy="86" r="5" fill="#378ADD"/>
+<circle cx="558.4" cy="86" r="5" fill="#378ADD"/>
+<circle cx="599.2" cy="86" r="5" fill="#378ADD"/>
+<rect x="134.3" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<rect x="167" y="150" width="24" height="22" rx="4" fill="#FAC775" stroke="#854F0B" stroke-width="0.5"/>
+<rect x="199.7" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<rect x="232.3" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<rect x="265" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<rect x="297.7" y="150" width="24" height="22" rx="4" fill="#FAC775" stroke="#854F0B" stroke-width="0.5"/>
+<rect x="330.3" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<rect x="363" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<rect x="395.7" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<rect x="428.3" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<rect x="461" y="150" width="24" height="22" rx="4" fill="#FAC775" stroke="#854F0B" stroke-width="0.5"/>
+<rect x="493.7" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<rect x="526.3" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<rect x="559" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<rect x="591.7" y="150" width="24" height="22" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+<circle cx="140" cy="200" r="5" fill="#378ADD"/>
+<text x="154" y="200" font-size="12" fill="#5F5E5A" dominant-baseline="central">有新画面</text>
+<rect x="280" y="193" width="14" height="14" rx="3" fill="#FAC775" stroke="#854F0B" stroke-width="0.5"/>
+<text x="302" y="200" font-size="12" fill="#5F5E5A" dominant-baseline="central">复制帧，没有任何新信息</text>
+<text x="40" y="228" font-size="12" fill="#2C2C2A">15 减 12 等于 3：每秒 30 帧里只有 24 帧是新画面，6 帧是重复的</text>
+<text x="40" y="244" font-size="11" fill="#888780">重复分布不均匀，人眼会读成顿挫，行话叫 judder</text>
+</svg>

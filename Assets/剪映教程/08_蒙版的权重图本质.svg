@@ -1,0 +1,17 @@
+<svg width="680" viewBox="0 0 680 240" role="img" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+<title>蒙版是一张灰度权重图</title>
+<desc>画面经过蒙版后每个像素获得一个零到二百五十五之间的权重</desc>
+<rect x="40" y="44" width="270" height="110" rx="8" fill="#E6F1FB" stroke="#B4B2A9" stroke-width="0.5"/>
+<circle cx="175" cy="99" r="42" fill="none" stroke="#85B7EB" stroke-width="10"/>
+<circle cx="175" cy="99" r="34" fill="#378ADD"/>
+<text x="175" y="99" text-anchor="middle" font-size="11" fill="#FFFFFF" dominant-baseline="central">画面</text>
+<text x="175" y="176" text-anchor="middle" font-size="12" fill="#5F5E5A" dominant-baseline="central">你看到的画面</text>
+<text x="340" y="105" text-anchor="middle" font-size="20" fill="#888780" dominant-baseline="central">=</text>
+<rect x="370" y="44" width="270" height="110" rx="8" fill="#2C2C2A" stroke="#B4B2A9" stroke-width="0.5"/>
+<circle cx="505" cy="99" r="42" fill="none" stroke="#888780" stroke-width="10"/>
+<circle cx="505" cy="99" r="34" fill="#FFFFFF"/>
+<text x="505" y="99" text-anchor="middle" font-size="11" fill="#2C2C2A" dominant-baseline="central">255</text>
+<text x="505" y="176" text-anchor="middle" font-size="12" fill="#5F5E5A" dominant-baseline="central">它对应的权重图</text>
+<text x="40" y="204" font-size="12" fill="#2C2C2A">白 255 全显　·　灰 0–255 半透明　·　黑 0 全隐</text>
+<text x="40" y="226" font-size="12" fill="#888780">形状决定轮廓，羽化决定过渡宽度，反转就是 255 减去原值</text>
+</svg>

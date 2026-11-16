@@ -1,0 +1,24 @@
+<svg width="680" viewBox="0 0 680 332" role="img" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+<title>segment 的字段构成</title>
+<desc>剪辑软件用一个片段对象描述素材引用与全部参数</desc>
+<rect x="40" y="48" width="600" height="240" rx="20" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.5"/>
+<text x="60" y="74" font-size="14" font-weight="500" fill="#2C2C2A">segment（片段）— 界面拖一次，这里改一行</text>
+<line x1="56" y1="120" x2="624" y2="120" stroke="#D3D1C7" stroke-width="0.5"/>
+<line x1="56" y1="152" x2="624" y2="152" stroke="#D3D1C7" stroke-width="0.5"/>
+<line x1="56" y1="184" x2="624" y2="184" stroke="#D3D1C7" stroke-width="0.5"/>
+<line x1="56" y1="216" x2="624" y2="216" stroke="#D3D1C7" stroke-width="0.5"/>
+<line x1="56" y1="248" x2="624" y2="248" stroke="#D3D1C7" stroke-width="0.5"/>
+<text x="60" y="109" font-size="12" font-family="ui-monospace, Consolas, monospace" fill="#0C447C">source_timerange</text>
+<text x="232" y="109" font-size="12" fill="#5F5E5A">从素材里截哪一段：入点 → 出点</text>
+<text x="60" y="141" font-size="12" font-family="ui-monospace, Consolas, monospace" fill="#0C447C">target_timerange</text>
+<text x="232" y="141" font-size="12" fill="#5F5E5A">放在时间轴什么位置、占多长时间</text>
+<text x="60" y="173" font-size="12" font-family="ui-monospace, Consolas, monospace" fill="#0F6E56">speed</text>
+<text x="232" y="173" font-size="12" fill="#5F5E5A">两段长度的比值：小于 1 变慢，大于 1 变快</text>
+<text x="60" y="205" font-size="12" font-family="ui-monospace, Consolas, monospace" fill="#0F6E56">clip</text>
+<text x="232" y="205" font-size="12" fill="#5F5E5A">位置 x/y、缩放、旋转、透明度、镜像</text>
+<text x="60" y="237" font-size="12" font-family="ui-monospace, Consolas, monospace" fill="#534AB7">common_keyframes</text>
+<text x="232" y="237" font-size="12" fill="#5F5E5A">让上面任意参数随时间变化</text>
+<text x="60" y="269" font-size="12" font-family="ui-monospace, Consolas, monospace" fill="#534AB7">extra_material_refs</text>
+<text x="232" y="269" font-size="12" fill="#5F5E5A">滤镜／蒙版／特效／动画的引用编号</text>
+<text x="40" y="316" font-size="12" fill="#888780">剪映工程 = 一份 JSON 文件，这六行就是一个片段的全部可编辑性</text>
+</svg>
