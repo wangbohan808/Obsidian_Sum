@@ -5,7 +5,7 @@ up: "[[00_总索引]]"
 tags:
   - 系统/索引
 created: "2026-10-12"
-updated: "2026-11-11"
+updated: "2026-11-16"
 ---
 
 # 开发技能 · 索引
@@ -23,7 +23,9 @@ updated: "2026-11-11"
 [[Github]]
 
 ### AI 与工具
-[[Agent工具]] · [[ClaudeCode深度使用]] · [[TraeWork使用指南]] · [[AI编码工具的规则文件机制]]（CLAUDE.md / AGENTS.md / .cursor/rules 层级与合并语义） · [[AI视频工作流]] · [[AI作曲]]
+[[Agent工具]] · [[ClaudeCode深度使用]] · [[TraeWork使用指南]] · [[AI编码工具的规则文件机制]]（CLAUDE.md / AGENTS.md / .cursor/rules 层级与合并语义）
+
+> 摄影 / 剪辑 / 音乐制作 相关的工具与流程已迁到 **[[00_创作MOC]]**，本区只留"换个项目还用得上"的原子技能。
 
 ### 端侧 AI 与异构计算
 [[端侧AI双栈工具链]]（ROCK 5C · RKNN/RKLLM ↔ Dragon Q8B · QAIRT/QNN/Genie）
@@ -32,7 +34,7 @@ updated: "2026-11-11"
 [[有刷直流电机驱动]] · [[Mac编译MCU]]
 
 ### 音视频与多媒体
-[[音视频底层原理]]（YUV 与色彩范围 → HDMI·UVC → H.264 六步 → RTMP/SRT → A/V 同步 → V4L2·MPP·GStreamer 映射） · [[手机作音视频实验台]]（iPhone 当「可控视频源 + 色彩基准 + 元数据样本库」：ffprobe 元数据路径 0 元、HDMI 采集路径 ≈150 元、ProRes RAW ↔ ISP 前端）
+[[音视频底层原理]]（YUV 与色彩范围 → HDMI·UVC → H.264 六步 → RTMP/SRT → A/V 同步 → V4L2·MPP·GStreamer 映射）——**这篇留在这里，因为它的下一步动作是求职（Linux 音视频栈），不是做作品**；要"做片/做歌"的那一侧见 [[00_创作MOC]]
 
 ### 计算机基础与工具链
 [[编译链接与库文件格式]]（.o/.a/.so/.lib/.dll/.elf/.hex/.bin · 链接期踩坑 · 裸机链接） · [[计算机网络]]
